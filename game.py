@@ -235,14 +235,14 @@ def on_key_down(key):
 
 def spawn_enemies():
     enemies.clear()
+    valid_platforms = [plat for plat in platforms if plat.width >= 64]
     for _ in range(10):
-        plat = platforms[randint(3, len(platforms) - 3)]
+        plat = valid_platforms[randint(0, len(valid_platforms) - 1)]
         e = Actor('enemy_idle1')
-        e.x = plat.x + 32
-        e.midbottom = (plat.x + 32, plat.top)
-        e.left_bound = e.x - 50
-        e.right_bound = e.x + 50
-        e.vx = randint(1, 2)
+        e.midbottom = (plat.centerx, plat.top)
+        e.left_bound = plat.left + 16
+        e.right_bound = plat.right - 16
+        e.vx = randint(1, 2) * (1 if randint(0, 1) == 0 else -1)
         enemies.append(e)
 
 def take_damage():
